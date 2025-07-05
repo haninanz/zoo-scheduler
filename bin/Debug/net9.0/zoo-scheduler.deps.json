@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "zoo-scheduler/1.0.0": {
+        "runtime": {
+          "zoo-scheduler.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "zoo-scheduler/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
