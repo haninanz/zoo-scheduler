@@ -39,7 +39,8 @@ for (int row = 0; row < maxData; row++)
                     visitingGroups[row, codeSchool] = "B";
                     visitingGroups[row, codeGroup] = (++groupsBCount).ToString();
                     visitingGroups[row, codeAnimalsOrder] = string.Join(" ", RandomizeAnimals());
-                } else
+                }
+                else
                 {
                     visitingGroups[row, codeSchool] = "";
                     visitingGroups[row, codeGroup] = "";
@@ -68,23 +69,21 @@ for (int row = 0; row < maxData; row++)
     }
 }
 
+string[,] newArrivals = AssignAnimalToGroup("B", 1);
+
 // Print all data
-for (int row = 0; row < maxData; row++) 
+for (int row = 0; row < maxData; row++)
 {
     if (visitingGroups[row, codeSchool] == "")
         continue;
 
-    Console.Write($"Group ID: {visitingGroups[row, codeSchool] + visitingGroups[row, codeGroup]}\n");
-    Console.Write($"Animal visit order: {visitingGroups[row, codeAnimalsOrder]}\n");
+    PrintSchoolName(row, true);
+    PrintAnimalGroup(row);
 }
-
-// for (int index = 0; index < combinations.Length; index++)
-// {
-//     Console.WriteLine($"Index: {string.Join(" ", combinations[index])}");
-// }
 
 string[] RandomizeAnimals()
 {
+    /* Create a unique randomized array of animal names from pettingZoo */
     string[] randomized = [];
     int[] randomizedIndices = [];
     Random random = new();
@@ -111,6 +110,7 @@ string[] RandomizeAnimals()
                 int number;
                 int[] allNumbers = [.. Enumerable.Range(0, pettingZoo.Length)];
                 int[] chosenNumbers = [];
+
                 foreach (int[] combination in combinations)
                     chosenNumbers = [.. chosenNumbers, combination[index]];
 
@@ -118,11 +118,6 @@ string[] RandomizeAnimals()
                 try
                 {
                     number = possibleNumbers[random.Next(possibleNumbers.Length)];
-                    // if (chosenNumbers.Contains(number))
-                    // {
-                    //     Console.WriteLine($"Chosen numbers: {string.Join(" ", chosenNumbers)}");
-                    //     break;
-                    // }
                 }
                 catch (IndexOutOfRangeException)
                 {
@@ -134,27 +129,11 @@ string[] RandomizeAnimals()
             if (randomizedIndices.Length < pettingZoo.Length)
                 randomizedIndices = [];
         } while (randomizedIndices.Length < pettingZoo.Length);
-        // for (int index = 0; index < pettingZoo.Length; index++)
-        // {
-        //     int number;
-        //     int[] allNumbers = [.. Enumerable.Range(0, pettingZoo.Length)];
-        //     int[] chosenNumbers = [];
-        //     foreach (int[] combination in combinations)
-        //         chosenNumbers = [.. chosenNumbers, combination[index]];
 
-        //     int[] possibleNumbers = [.. allNumbers.Where(n => !chosenNumbers.Contains(n) && !randomizedIndices.Contains(n))];
-        //     Console.WriteLine($"Possible numbers: {string.Join(" ", possibleNumbers)}");
-        //     if (possibleNumbers.Length == 0)
-        //         continue;
-        //     else if (possibleNumbers.Length == 1)
-        //         number = possibleNumbers[0];
-        //     else
-        //         number = possibleNumbers[random.Next(possibleNumbers.Length)];
-
-        //     randomizedIndices = [.. randomizedIndices, number];
-        // }
+        // For debugging purposes, you can comment the next two lines
         Console.WriteLine($"Combinations count: {combinations.Length}");
         Console.WriteLine($"Randomized indices: {string.Join(" ", randomizedIndices)}");
+        
         combinations = [.. combinations, randomizedIndices];
     }
 
@@ -164,17 +143,62 @@ string[] RandomizeAnimals()
     return randomized;
 }
 
-// void AssignAnimalToGroup()
-// {
+string[,] AssignAnimalToGroup(string school, int groups = 6)
+{
+    string[,] assignedGroups;
+    int checkedSchools = 0;
 
-// }
+    for (int row = 0; row < maxData; row++)
+    {
+        if (visitingGroups[row, codeSchool] != school)
+            checkedSchools++;
+    }
+    if (checkedSchools == 6)
+    {
+        Console.WriteLine($"School {school} has reached the maximum number of groups.");
+        return new string[0, 0];
+    }
+    else
+    {
+        if (checkedSchools + groups > 6)
+        {
+            Console.WriteLine($"Cannot add {groups} more group(s) to school {school}");
+            return new string[0, 0];
+        }
+        else
+        {
+            assignedGroups = new string[groups, 3];
+            for (int row = 0; row < groups; row++)
+            {
+                assignedGroups[row, codeSchool] = school;
+                assignedGroups[row, codeGroup] = (checkedSchools + row + 1).ToString();
+                assignedGroups[row, codeAnimalsOrder] = string.Join(" ", RandomizeAnimals());
+            }
+        }
+    }
 
-// void PrintSchoolName(int index)
-// {
-//     Console.WriteLine(visitingGroups[index, codeSchool]);
-// }
+    return assignedGroups;
+}
 
-// void PrintAnimalGroup()
-// {
+void PrintSchoolName(int index, bool inID = false)
+{
+    if (inID)
+        Console.WriteLine($"Group ID: {visitingGroups[index, codeSchool] + visitingGroups[index, codeGroup]} ");
+    else
+        Console.WriteLine($"School: {visitingGroups[index, codeSchool]} ");
+}
 
-// }
+void PrintAnimalGroup(int index, bool inDetail = false)
+{
+    if (inDetail)
+    {
+        string[] animals = visitingGroups[index, codeAnimalsOrder].Split(' ');
+        Console.WriteLine("Animal visit order: ");
+        for (int animalIndex = 0; animalIndex < animals.Length; animalIndex++)
+            Console.WriteLine($"  {animalIndex + 1}. {animals[animalIndex]}");
+    }
+    else
+    {
+        Console.WriteLine($"Animal visit order: {visitingGroups[index, codeAnimalsOrder]} ");
+    }
+}

@@ -40,3 +40,4 @@ C:\Users\hanin\OneDrive\Documents\Project\csharp\zoo-scheduler\obj\Debug\net9.0\
 C:\Users\hanin\OneDrive\Documents\Project\csharp\zoo-scheduler\obj\Debug\net9.0\zoo-scheduler.pdb
 C:\Users\hanin\OneDrive\Documents\Project\csharp\zoo-scheduler\obj\Debug\net9.0\zoo-scheduler.genruntimeconfig.cache
 C:\Users\hanin\OneDrive\Documents\Project\csharp\zoo-scheduler\obj\Debug\net9.0\ref\zoo-scheduler.dll
+C:\Users\hanin\OneDrive\Documents\Project\csharp\zoo-scheduler\obj\Debug\net9.0\zoo-scheduler.sourcelink.json
