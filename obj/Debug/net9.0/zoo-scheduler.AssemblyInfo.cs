@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("zoo-scheduler")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c48e0fb4813fc6303173577bb4af0b36b335447d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+599def6f0d0cbc513c47f6d7e88176116460a6e8")]
 [assembly: System.Reflection.AssemblyProductAttribute("zoo-scheduler")]
 [assembly: System.Reflection.AssemblyTitleAttribute("zoo-scheduler")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

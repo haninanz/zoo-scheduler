@@ -8,14 +8,13 @@ string[] pettingZoo =
     "goats", "iguanas", "kangaroos", "lemurs", "llamas", "macaws",
     "ostriches", "pigs", "ponies", "rabbits", "sheep", "tortoises",
 ];
-string[,] visitingGroups = new string[maxData, 4];
+string[,] visitingGroups = new string[maxData, 3];
 int[][] combinations = [];
 
 // Code number to distinguish which row keeps which data
 int codeSchool = 0;
 int codeGroup = 1;
 int codeAnimalsOrder = 2;
-// int code = 3;
 
 // Generate data
 int groupsACount = 0;
@@ -69,9 +68,11 @@ for (int row = 0; row < maxData; row++)
     }
 }
 
+// Test adding new group(s) to existing school
 string schoolToAdd = "B";
-AssignAnimalToGroup(schoolToAdd, 2);
-
+int groupsToAdd = 2;
+Console.WriteLine($"Adding {groupsToAdd} group(s) to school {schoolToAdd}...");
+AssignAnimalToGroup(schoolToAdd, groupsToAdd);
 
 // Print all data
 for (int row = 0; row < maxData; row++)
@@ -147,6 +148,7 @@ string[] RandomizeAnimals()
 
 void AssignAnimalToGroup(string school, int groups = 6)
 {
+    /* Create new group(s) for the specified school and assign animals visit schedule */
     int checkedSchools = 0;
 
     for (int row = 0; row < maxData; row++)
