@@ -69,7 +69,9 @@ for (int row = 0; row < maxData; row++)
     }
 }
 
-string[,] newArrivals = AssignAnimalToGroup("B", 1);
+string schoolToAdd = "B";
+AssignAnimalToGroup(schoolToAdd, 2);
+
 
 // Print all data
 for (int row = 0; row < maxData; row++)
@@ -130,9 +132,9 @@ string[] RandomizeAnimals()
                 randomizedIndices = [];
         } while (randomizedIndices.Length < pettingZoo.Length);
 
-        // For debugging purposes, you can comment the next two lines
-        Console.WriteLine($"Combinations count: {combinations.Length}");
-        Console.WriteLine($"Randomized indices: {string.Join(" ", randomizedIndices)}");
+        // For debugging purposes, you can comment/uncomment the next two lines as necessary
+        // Console.WriteLine($"Combinations count: {combinations.Length}");
+        // Console.WriteLine($"Randomized indices: {string.Join(" ", randomizedIndices)}");
         
         combinations = [.. combinations, randomizedIndices];
     }
@@ -143,41 +145,40 @@ string[] RandomizeAnimals()
     return randomized;
 }
 
-string[,] AssignAnimalToGroup(string school, int groups = 6)
+void AssignAnimalToGroup(string school, int groups = 6)
 {
-    string[,] assignedGroups;
     int checkedSchools = 0;
 
     for (int row = 0; row < maxData; row++)
     {
-        if (visitingGroups[row, codeSchool] != school)
+        if (visitingGroups[row, codeSchool] == school)
             checkedSchools++;
     }
     if (checkedSchools == 6)
     {
         Console.WriteLine($"School {school} has reached the maximum number of groups.");
-        return new string[0, 0];
+        return;
     }
     else
     {
         if (checkedSchools + groups > 6)
         {
             Console.WriteLine($"Cannot add {groups} more group(s) to school {school}");
-            return new string[0, 0];
+            return;
         }
         else
         {
-            assignedGroups = new string[groups, 3];
-            for (int row = 0; row < groups; row++)
+            int lastRow = Array.LastIndexOf([.. Enumerable.Range(0, maxData).Select(x => visitingGroups[x, codeSchool])], school);
+            for (int row = lastRow + 1; row < lastRow + groups + 1; row++)
             {
-                assignedGroups[row, codeSchool] = school;
-                assignedGroups[row, codeGroup] = (checkedSchools + row + 1).ToString();
-                assignedGroups[row, codeAnimalsOrder] = string.Join(" ", RandomizeAnimals());
+                visitingGroups[row, codeSchool] = school;
+                visitingGroups[row, codeGroup] = (++checkedSchools).ToString();
+                visitingGroups[row, codeAnimalsOrder] = string.Join(" ", RandomizeAnimals());
             }
         }
     }
 
-    return assignedGroups;
+    return;
 }
 
 void PrintSchoolName(int index, bool inID = false)
